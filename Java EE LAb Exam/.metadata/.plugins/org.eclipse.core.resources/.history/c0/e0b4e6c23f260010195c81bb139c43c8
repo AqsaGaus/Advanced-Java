@@ -1,0 +1,45 @@
+package com.rest.service;
+
+import java.util.Collection;
+
+import org.hibernate.sql.ast.tree.expression.Collation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import com.rest.doa.TourRepository;
+import com.rest.entity.TourPackage;
+import com.rest.exception.ResourceAlreadyExistException;
+
+@Service
+public class TourServices implements ITourService
+{
+	@Autowired
+	private TourRepository tourRep;
+
+	@Override
+	public boolean createTeam(TourPackage newTour) 
+	{
+		TourPackage existingTourPackage =  tourRep.findByName(newTour.getPackageName());
+		(!ObjectUtils.isEmpty(newTour))
+			throw new ResourceAlreadyExistException("Tour Package of same Name exist.");
+				
+		return false;
+	}
+
+	@Override
+	public Collection<TourPackage> allTAllTourPackage() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TourPackage getTourByName(String name) 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

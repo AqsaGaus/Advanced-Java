@@ -1,0 +1,73 @@
+package com.rest.service;
+
+import java.util.Collection;
+
+import org.hibernate.sql.ast.tree.expression.Collation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import com.rest.doa.TourRepository;
+import com.rest.entity.TourPackage;
+import com.rest.exception.ResourceAlreadyExistException;
+import com.rest.exception.ResourceNotExistException;
+
+@Service
+public class TourServices implements ITourService
+{
+	@Autowired
+	private TourRepository tourRep;
+
+	@Override
+	public boolean createTourPackage(TourPackage newTour) 
+	{
+		TourPackage existingTourPackage =  tourRep.findBypackageName(newTour.getPackageName());
+		
+		if (!ObjectUtils.isEmpty(existingTourPackage))
+			throw new ResourceAlreadyExistException("Tour Package of same Name exist.");
+		
+		TourPackage newTourPackage = tourRep.save(newTour);
+		if (!ObjectUtils.isEmpty(newTour))
+			return true;
+		else
+			return false;	
+	}
+
+	@Override
+	public Collection<TourPackage> allTAllTourPackage() 
+	{
+		return tourRep.findAll();
+	}
+
+	@Override
+	public TourPackage getTourByName(String packageName) 
+	{
+		
+		TourPackage foundTourPackage = tourRep.findBypackageName(packageName);
+		if(ObjectUtils.isEmpty(foundTourPackage))
+			throw new ResourceNotExistException("The name of the package does not exist.");
+		else
+			return foundTourPackage;
+	}
+
+
+	@Override
+	public TourPackage updateTourPackage(Integer id, TourPackage updated) 
+	{
+	    TourPackage existing = tourRep.findById(id)
+	            .orElseThrow(() -> new ResourceNotExistException("Tour package not found with ID: " + id));
+	
+	    existing.setPackageName(updated.getPackageName());
+	    existing.setDuration(updated.getDuration());
+	    existing.setPrice(updated.getPrice());
+	 
+	
+	    return tourRep.save(existing);
+	}
+	
+	@Override
+	public void deleteTourPackage(Integer packageId) 
+	{
+		tourRep.deleteById(packageId);	
+	}
+}

@@ -1,0 +1,38 @@
+package com.rest.service;
+
+import java.util.Collection;
+
+import org.hibernate.sql.ast.tree.expression.Collation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rest.doa.TourRepository;
+import com.rest.entity.TourPackage;
+
+@Service
+public class TourServices 
+{
+	@Autowired
+	private TourRepository tourRep;
+	
+//	  1) Create tour package
+	public void createTourPackage(TourPackage tour)
+	{
+		tourRep.save(tour);
+	}
+	
+//    2) Read tour packages
+	public Collection<TourPackage> getAllTourPackage()
+	{
+		return tourRep.findAll();
+	}
+	
+//    3) Read single tour package (By tour name)
+	
+	
+	
+//    4) Upgrade tour plan
+	
+	
+//    5) Delete stock
+}

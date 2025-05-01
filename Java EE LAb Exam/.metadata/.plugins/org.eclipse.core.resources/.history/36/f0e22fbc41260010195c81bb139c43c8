@@ -1,0 +1,65 @@
+package com.rest.service;
+
+import java.util.Collection;
+
+import org.hibernate.sql.ast.tree.expression.Collation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import com.rest.doa.TourRepository;
+import com.rest.entity.TourPackage;
+import com.rest.exception.ResourceAlreadyExistException;
+import com.rest.exception.ResourceNotExistException;
+
+@Service
+public class TourServices implements ITourService
+{
+	@Autowired
+	private TourRepository tourRep;
+
+	@Override
+	public boolean createTeam(TourPackage newTour) 
+	{
+		TourPackage existingTourPackage =  tourRep.findByName(newTour.getPackageName());
+		
+		if (!ObjectUtils.isEmpty(existingTourPackage))
+			throw new ResourceAlreadyExistException("Tour Package of same Name exist.");
+		
+		TourPackage newTourPackage = tourRep.save(newTour);
+		if (!ObjectUtils.isEmpty(newTour))
+			return true;
+		else
+			return false;	
+	}
+
+	@Override
+	public Collection<TourPackage> allTAllTourPackage() 
+	{
+		return tourRep.findAll();
+	}
+
+	@Override
+	public TourPackage getTourByName(String name) 
+	{
+		
+		TourPackage foundTourPackage = tourRep.findByName(name);
+		if(!ObjectUtils.isEmpty(foundTourPackage))
+			throw new ResourceNotExistException("The name of the package does not exist.");
+		else
+			return foundTourPackage;
+	}
+
+	@Override
+	public TourPackage updateTourPackage(TourPackage tour, Integer packageId) 
+	{
+		
+		return null;
+	}
+
+	@Override
+	public void deleteTourPackage(Integer packageId)
+	{
+		tourRep.deleteById(packageId);	
+	}
+}

@@ -1,0 +1,59 @@
+.container {
+  width: 1200px;
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+nav li {
+  list-style: none;
+  /* border: solid; */
+  padding: 10px 20px;
+  display: inline-block;
+}
+nav ul {
+  padding-left: 0;
+}
+nav li a {
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+nav {
+  border-bottom: 1px solid;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.col-3 {
+  width: 25%;
+}
+.col-9 {
+  width: 75%;
+}
+.brand h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.brand li {
+  list-style: none;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.brand ul {
+  border: 1px solid gray;
+}
+.text-center {
+  text-align: center;
+}
+figure {
+    margin: 0;
+}
+footer {
+    background-color: black;
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
